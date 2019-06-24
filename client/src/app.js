@@ -4,7 +4,7 @@ import axios from 'axios';
 import User from './user.js';
 import Search from './search.js';
 import Followers from './followers.js'
-import SearchHistory from './searchhistory.js'
+import SearchHistory from './searchHistory.js'
 
 class App extends React.Component {
   constructor(props) {
@@ -13,7 +13,8 @@ class App extends React.Component {
     this.state = {
       login: null,
       score: null,
-      avatar_url: null
+      avatar_url: null,
+      history: []
     }
     this.searchGithub = this.searchGithub.bind(this);
     this.get = this.get.bind(this);
@@ -28,7 +29,8 @@ class App extends React.Component {
       .get(`https://api.github.com/search/users?q=${query}`)
       .then(({ data }) => {
         const { login, score, avatar_url } = data.items[0];
-        this.setState({ login, score, avatar_url })
+        this.setState({ login, score, avatar_url }, () => {
+        })
         this.post({ login, score, avatar_url });
       })
       .catch(() => { console.log('We were not able to retrieve github data') })
@@ -39,7 +41,9 @@ class App extends React.Component {
     axios
       .get('/users')
       .then(({ data }) => {
-        console.log(data);
+        this.setState({ history: data }, () => {
+          console.log(this.state.history);
+        })
       })
   }
 
@@ -48,7 +52,10 @@ class App extends React.Component {
     const { login, score, avatar_url } = githubData;
     axios
       .post('/users', { login, score, avatar_url })
-      .then(() => { console.log('Your axios posted') })
+      .then(() => { 
+        console.log('Your axios posted')
+        this.get();
+      })
       .catch(() => { console.log('Your request was not completed') })
   }
 
@@ -66,8 +73,8 @@ class App extends React.Component {
         <h1>Welcome to HackerHub</h1>
         <Search searchGithub={this.searchGithub}/>
         <User login={this.state.login} score={this.state.score} avatar_url={this.state.avatar_url} />
-        <Followers />
-        <SearchHistory />
+        {/* <Followers /> */}
+        <SearchHistory history={this.state.history}/>
       </div>
 
     )
@@ -75,8 +82,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.searchGithub('kristina taing');
-    // this.post();
-    this.get();
   }
 }
 

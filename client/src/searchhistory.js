@@ -1,8 +1,16 @@
 import React from 'react';
+import SearchHistoryItem from './searchHistoryItem.js';
 
 const SearchHistory = (props) => {
   return(
-    <h3>This is Search History</h3>
+    <div>
+      <h3>This is Search History</h3>
+      { props.history.map((item, key) => {
+        return(
+          <SearchHistoryItem key={key} item={item}/>
+        );
+      }) }
+    </div>
   );
 }
 
