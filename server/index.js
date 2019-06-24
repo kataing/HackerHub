@@ -18,41 +18,82 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 app.get('/users', (req, res) => {
-  const { username, login, avatar_url } = req.body;
-  models.findAll({ username, login, avatar_url })
+  const { login, score, avatar_url } = req.body;
+  models.findAll({ login, score, avatar_url })
     .then((data) => {
       res.status(200).send(data);
     })
     .catch((err) => {
+      res.status(404).send('We were not able to retreive your infromation');
       console.error('We were not able to retreive your information', err);
     })
 })
 
 app.post('/users', (req, res) => {
-  const { username, login, avatar_url } = req.body;
-  models.create({ username, login, avatar_url })
+  const { login, score, avatar_url } = req.body;
+  models.create({ login, score, avatar_url })
     .then(() => {
-      res.status(201).send('We posted');
+      res.status(201).send('Your entry has been posted');
     })
     .catch((err) => {
+      res.status(400).send('We were not able to send your information');
       console.log('We were not able to send your information', err);
     })
 })
 
-app.put('/users/:id', (req, res) => {
-  // console.log('this is req.query',req.query);
-  console.log('this is req.params', req.params);
-  const { id } = req.params;
-  models.update({ id })
-  .then(() => {
-    res.status(203).send('We updated');
-  })
-  .catch((err) => {
-    console.log('We were not able to update your information', err);
-  })
+// Using req.query
+app.put('/users', (req, res) => {
+  const { id } = req.query;
+  const { login, score, avatar_url } = req.body;
+  models.update(
+    { login, score, avatar_url },
+    { where: { id } })
+    .then(() => {
+      res.status(204).send('Your entry has been updated');
+    })
+    .catch((err) => {
+      res.status(400).send('We were not able to update your information');
+      console.log('We were not able to update your information', err);
+    })
 })
-
-// app.delete('/users', (req, res) => {
-//   const { username, login, avatar_url } = req.body;
-//   models.
-// })
+// Using req.params
+app.put('/users/:id', (req, res) => {
+  const { id } = req.params;
+  const { login, score, avatar_url } = req.body;
+  models.update(
+    { login, score, avatar_url },
+    { where: { id } })
+    .then(() => {
+      res.status(204).send('Your entry has been updated');
+    })
+    .catch((err) => {
+      res.status(400).send('We were not able to update your information');
+      console.log('We were not able to update your information', err);
+    })
+})
+// Using req.query
+app.delete('/users', (req, res) => {
+  const { id } = req.query;
+  models.destroy(
+    { where: { id } })
+    .then(() => {
+      res.status(204).send('Your entry has been deleted');
+    })
+    .catch((err) => {
+      res.status(400).send('We were not able to delete your information');
+      console.log('We were not able to delete your entry', err);
+    })
+})
+// Using req.params
+app.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+  models.destroy(
+    { where: { id } })
+    .then(() => {
+      res.status(204).send('Your entry has been deleted');
+    })
+    .catch((err) => {
+      res.status(400).send('We were not able to delete your information');
+      console.log('We were not able to delete your entry', err);
+    })
+})

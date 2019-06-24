@@ -2,11 +2,12 @@ const Sequelize = require('sequelize');
 const connection = require('./index.js');
 
 const Users = connection.define('users', {
-  username: {
+
+  login: {
     type: Sequelize.STRING,
     allowNull: false
   }, 
-  login : {
+  score : {
     type: Sequelize.STRING,
     allowNull: false
   },
