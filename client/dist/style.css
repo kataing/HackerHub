@@ -1,0 +1,56 @@
+h1 {
+  background-color: black;
+  font-size: 50px;
+  text-align: center;
+  padding: 10px;
+}
+
+h2 {
+  font-size: 30px;
+  text-align: center;
+  padding: 10px;
+}
+
+h3 {
+  font-size: 30px;
+  text-align: center;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+  padding: 10px;
+}
+
+body {
+  display: block;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: rgba(100,100,100);
+  color: white;
+  text-align: center;
+}
+
+form {
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+}
+
+input {
+  padding: 5px;
+  margin: 0px 10px 5px 10px;
+  text-align: center;
+}
+
+button {
+  padding:5px;
+  text-align: center;
+}
+
+.search-item {
+  display: inline-block;
+  margin: 15px;
+}
+
+img {
+  padding: 10px;
+  border-radius: 50%;
+  height: 200px;
+}
