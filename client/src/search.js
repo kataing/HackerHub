@@ -28,7 +28,7 @@ class Search extends React.Component{
     return (
       <div>
         <form>
-          <h3>Search for a user</h3>
+          <h2>Search for a user</h2>
           <input className='searchbar' onChange={this.handleOnChange} value={this.state.query}></input>
           <button className='submit' onClick={this.handleOnSubmit}>Search</button>
         </form>
