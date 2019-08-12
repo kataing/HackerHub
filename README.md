@@ -1,3 +1,3 @@
 # fsreview-github-users
 
-![]demo.gif
+![](demo.gif)
