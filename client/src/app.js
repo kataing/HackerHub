@@ -70,7 +70,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Welcome to hackerHub</h1>
+        <h1>Welcome to HackerHub</h1>
         <Search searchGithub={this.searchGithub}/>
         <User login={this.state.login} score={this.state.score} avatar_url={this.state.avatar_url} />
         {/* <Followers /> */}
